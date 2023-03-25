@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">RunLife</string>
+
+
+    //Headings
+    <string name="heading_one">Entrena y descubre</string>
+    <string name="heading_two">Llega más lejos</string>
+    <string name="heading_three">Mantente motivado</string>
+
+    //Description
+    <string name="desc_one">Mejora tus entrenamientos y descubre nuevas rutas con RunLife. Prepárate para superarte a ti mismo.</string>
+    <string name="desc_two">Lleva tus carreras al siguiente nivel con RunLife. Seguimiento de rutas, análisis de datos y más.</string>
+    <string name="desc_three">¿Necesitas motivación para correr más y mejor? RunLife te ofrece estadísticas precisas y un seguimiento detallado para mantenerte en el camino correcto.</string>
+
+
+    //NAV
+
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
+    <string name="title_activity_principal">PrincipalActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+</resources>
