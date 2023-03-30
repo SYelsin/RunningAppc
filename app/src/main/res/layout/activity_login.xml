@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondologin"
+    android:background="@drawable/fondol"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".LoginActivity">
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="Login"
                 android:textAlignment="center"
-                android:textColor="@color/lavender"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="36sp"
                 android:textStyle="bold" />
 
@@ -41,10 +41,11 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableLeft="@drawable/userl"
+                android:drawableTint="?attr/colorPrimary"
                 android:drawablePadding="8dp"
                 android:hint="Email"
                 android:padding="8dp"
-                android:textColor="@color/black" />
+                android:textColor="?attr/colorPrimary" />
 
             <EditText
                 android:id="@+id/login_password"
@@ -53,18 +54,21 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableLeft="@drawable/padlock"
+                android:drawableTint="?attr/colorPrimary"
                 android:drawablePadding="8dp"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="8dp"
-                android:textColor="@color/black" />
+                android:textColor="?attr/colorPrimary" />
+
+
 
             <Button
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
-                android:backgroundTint="@color/lavender"
+                android:backgroundTint="?attr/colorPrimary"
                 android:text="Login"
                 android:textSize="18sp"
                 app:cornerRadius="20dp" />
@@ -91,7 +95,7 @@
                 android:padding="8dp"
                 android:text="¿No tienes cuenta? Registrate"
                 android:textAlignment="center"
-                android:textColor="@color/lavender"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="18sp" />
 
         </LinearLayout>

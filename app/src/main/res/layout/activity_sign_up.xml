@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondoruning"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".sign_up_activity">
@@ -41,19 +40,7 @@
                 android:background="@drawable/custom_edittext"
                 android:drawableLeft="@drawable/userl"
                 android:drawablePadding="8dp"
-                android:hint="Email"
-                android:padding="8dp"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:id="@+id/signup_email3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/custom_edittext"
-                android:drawableLeft="@drawable/userl"
-                android:drawablePadding="8dp"
-                android:hint="Email"
+                android:hint="Nombre"
                 android:padding="8dp"
                 android:textColor="@color/black" />
 
@@ -63,7 +50,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/custom_edittext"
-                android:drawableLeft="@drawable/userl"
+                android:drawableLeft="@drawable/a"
                 android:drawablePadding="8dp"
                 android:hint="Email"
                 android:padding="8dp"
@@ -73,7 +60,7 @@
                 android:id="@+id/signup_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableLeft="@drawable/padlock"
                 android:drawablePadding="8dp"

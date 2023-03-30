@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_marginBottom="50dp"
+       android:paddingTop="?attr/actionBarSize">
+
+      <ScrollView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          tools:visibility="visible">
+
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical">
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:layout_gravity="center"
+                android:innerRadius="0dp"
+                android:shape="ring"
+                app:cardCornerRadius="110dp"
+                app:cardElevation="6dp"
+                app:cardUseCompatPadding="true">
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+                   android:gravity="center"
+                   android:orientation="vertical">
+
+                  <ImageView
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:src="@drawable/calorias" />
+
+                  <TextView
+                      android:id="@+id/TV_STEPS"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="0"
+                      android:textSize="30dp" />
+
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Calorías"
+                      android:textColor="?attr/colorPrimary" />
+
+
+               </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+               <androidx.cardview.widget.CardView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   app:cardCornerRadius="10dp"
+                   app:cardElevation="10dp"
+                   app:cardUseCompatPadding="true">
+
+                  <LinearLayout
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:padding="15dp">
+
+
+                     <ImageView
+                         android:id="@+id/imageView6"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:src="@drawable/metro" />
+
+                     <TextView
+                         android:id="@+id/TV_DISTANCE2"
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:drawablePadding="10dp"
+                         android:text="0.02 km"
+                         android:textAlignment="center"
+                         android:textSize="20dp" />
+
+                     <TextView
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:text="   Distancia total   "
+                         android:textAlignment="center"
+                         android:textColor="?attr/colorPrimary" />
+
+                  </LinearLayout>
+
+
+               </androidx.cardview.widget.CardView>
+
+               <androidx.cardview.widget.CardView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   app:cardCornerRadius="10dp"
+                   app:cardElevation="10dp"
+                   app:cardUseCompatPadding="true">
+
+                  <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:padding="15dp">
+
+
+                     <ImageView
+                         android:id="@+id/imageView9"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:src="@drawable/pasos" />
+
+                     <TextView
+                         android:id="@+id/TV_DISTANCE10"
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:drawablePadding="10dp"
+                         android:text="100"
+                         android:textAlignment="center"
+                         android:textSize="20dp" />
+
+                     <TextView
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:text="           Pasos          "
+                         android:textAlignment="center"
+                         android:textColor="?attr/colorPrimary" />
+
+                  </LinearLayout>
+
+
+               </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                app:cardUseCompatPadding="true">
+
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+                   android:orientation="vertical"
+                   android:padding="10dp">
+
+
+                  <ImageView
+                      android:id="@+id/imageVieww"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:src="@drawable/ritmo" />
+
+                  <TextView
+                      android:id="@+id/TV_CALORIEw"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:drawablePadding="10dp"
+                      android:gravity="center"
+                      android:text="43:10 min/km"
+                      android:textSize="25dp" />
+
+                  <TextView
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:text="Mejor Ritmo"
+                      android:textAlignment="center"
+                      android:textColor="?attr/colorPrimary" />
+
+               </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                app:cardUseCompatPadding="true">
+
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+                   android:orientation="vertical"
+                   android:padding="10dp">
+
+
+                  <ImageView
+                      android:id="@+id/imageView3"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:src="@drawable/duracion" />
+
+                  <TextView
+                      android:id="@+id/TV_CALORIES"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:drawablePadding="10dp"
+                      android:gravity="center"
+                      android:text="10 hrs"
+                      android:textSize="25dp" />
+
+                  <TextView
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:text="Tiempo total"
+                      android:textAlignment="center"
+                      android:textColor="?attr/colorPrimary" />
+
+               </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+         </LinearLayout>
+
+      </ScrollView>
+   </RelativeLayout>
+
+
+</FrameLayout>

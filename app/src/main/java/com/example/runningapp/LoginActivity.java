@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().hide();
+
 
         loginEmail = findViewById(R.id.login_email);
         loginPassword = findViewById(R.id.login_password);
@@ -47,7 +47,12 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                intent.putExtra("Usuario", loginEmail.getText().toString());
+                Toast.makeText(LoginActivity.this, "Login Correcto",Toast.LENGTH_SHORT).show();
+                // Inicia la actividad de destino
+                startActivity(intent);
+               // startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             }
         });
         signupRedirectText.setOnClickListener(new View.OnClickListener() {

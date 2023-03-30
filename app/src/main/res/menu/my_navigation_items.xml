@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="Home" />
+        <item
+            android:id="@+id/estadisticas"
+            android:icon="@drawable/tendencia"
+            android:title="Estadisticas" />
+        <item
+            android:id="@+id/ranking"
+            android:icon="@drawable/podio"
+            android:title="Ranking" />
+
+        <item
+            android:id="@+id/configuraciones"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="Configuraciones" />
+
+    <item android:title="Social">
+        <menu>
+            <item
+                android:id="@+id/comunidad"
+                android:icon="@drawable/comunidad"
+                android:title="Comunidad" />
+            <item
+                android:id="@+id/chat"
+                android:icon="@drawable/ic_baseline_message_24"
+                android:title="Chat" />
+        </menu>
+    </item>
+    <item android:title="Perfil">
+        <menu>
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/logout"
+                android:title="Cerrar Sesión" />
+
+
+            <item
+                android:id="@+id/about"
+                android:icon="@drawable/info"
+                android:title="About" />
+        </menu>
+    </item>
+
+
+</menu>
