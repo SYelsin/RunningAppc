@@ -155,6 +155,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, CarreraActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

@@ -12,4 +12,6 @@
     <color name="inactive">#C4C4C4</color>
     <color name="active">#407BFF</color>
     <color name="verde">#25F741</color>
+    <color name="iniciar">#209524</color>
+    <color name="detener">#CB3234</color>
 </resources>
