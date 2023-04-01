@@ -8,21 +8,21 @@
             android:icon="@drawable/ic_baseline_home_24"
             android:title="Home" />
         <item
+            android:id="@+id/calentamiento"
+            android:icon="@drawable/calentamiento"
+            android:title="Calentamiento" />
+
+        <item
             android:id="@+id/estadisticas"
             android:icon="@drawable/tendencia"
             android:title="Estadisticas" />
-        <item
-            android:id="@+id/ranking"
-            android:icon="@drawable/podio"
-            android:title="Ranking" />
-
-        <item
-            android:id="@+id/configuraciones"
-            android:icon="@drawable/ic_baseline_settings_24"
-            android:title="Configuraciones" />
 
     <item android:title="Social">
         <menu>
+            <item
+                android:id="@+id/ranking"
+                android:icon="@drawable/podio"
+                android:title="Ranking" />
             <item
                 android:id="@+id/comunidad"
                 android:icon="@drawable/comunidad"

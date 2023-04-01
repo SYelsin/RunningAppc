@@ -53,7 +53,8 @@ public class CarreraActivity extends AppCompatActivity implements OnMapReadyCall
 
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location ultimaUbicacion;
-    private double distanciaRecorrida = 0;
+    private double distanciaRecorrida = 0.00;
+    double calorias;
     private String tiempoActual;
     private String caloriasQuemadas;
 
@@ -139,7 +140,7 @@ public class CarreraActivity extends AppCompatActivity implements OnMapReadyCall
 
         contarDistancia();
         // Actualizar la distancia recorrida en la UI
-        distancia.setText(String.format("%.2f", distanciaRecorrida));
+        distancia.setText(String.format("%.1f", distanciaRecorrida));
 
         // Calcular las calorías quemadas
 
@@ -151,19 +152,17 @@ public class CarreraActivity extends AppCompatActivity implements OnMapReadyCall
         int minutos1 = Integer.parseInt(tiempoSeparado[1]); // obtener los minutos
         int segundos1 = Integer.parseInt(tiempoSeparado[2]); // obtener los segundos
 
-        int totalSegundos = (horas * 3600) + (minutos * 60) + segundos;
-
-
+        int totalSegundos = (horas1 * 3600) + (minutos1 * 60) + segundos1; //corregir aquí
 
         float peso = 70; // Peso corporal en kilogramos
         double distancia = distanciaRecorrida; // Distancia recorrida en kilómetros
-        double tiempoc = totalSegundos; // Tiempo de carrera en segundos (30 minutos)
+        double tiempoc = 1; // Tiempo de carrera en segundos (30 minutos)
         double velocidad = distancia / (tiempoc / 3600.0); // Velocidad en km/h
         double MET = 9.8 * velocidad / 3.5 + 3.5; // Intensidad del ejercicio en METs
         double duracion_horas = tiempoc / 3600.0;
-        double calorias = ((0.75 * peso) + (MET * peso * duracion_horas)) / 2.0;
+        calorias = ((0.75 * peso) + (MET * peso * duracion_horas)) / 2.0;
         double kcalorias = calorias / 1000.0; // Convertir a kilocalorías (kcal)
-        caloriasQuemadas = String.format("%.2f", kcalorias);
+        caloriasQuemadas = String.format("%.1f", kcalorias);
         txtcalorias.setText(caloriasQuemadas);
 
     }

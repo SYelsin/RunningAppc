@@ -85,7 +85,8 @@ public class HomeActivity extends AppCompatActivity {
                     replaceFragment(new ChatFragment());
                     break;
                 case R.id.perfil:
-                    replaceFragment(new PerfilFragment());
+                    Intent intent = new Intent(HomeActivity.this, PerfilActivity.class);
+                    startActivity(intent);
                     break;
             }
             return true;
@@ -99,14 +100,15 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.nav_home:
                     replaceFragment(new HomeFragment());
                     break;
-                case R.id.estadisticas:
-                    Toast.makeText(HomeActivity.this, "Estadisticas", Toast.LENGTH_SHORT).show();
+                case R.id.calentamiento:
+                    replaceFragment(new CalentamientoFragment());
                     break;
                 case R.id.ranking:
-                    Toast.makeText(HomeActivity.this, "Ranking", Toast.LENGTH_SHORT).show();
+                    replaceFragment(new RankingFragment());
                     break;
-                case R.id.configuraciones:
-                    Toast.makeText(HomeActivity.this, "Configuraciones", Toast.LENGTH_SHORT).show();
+                case R.id.estadisticas:
+                    Intent intent = new Intent(HomeActivity.this, EstadisticasActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.comunidad:
                     replaceFragment(new SocialFragment());
@@ -139,7 +141,8 @@ public class HomeActivity extends AppCompatActivity {
                     fragment = new ChatFragment();
                     break;
                 case R.id.perfil:
-                    fragment = new PerfilFragment();
+                    Intent intent = new Intent(HomeActivity.this, PerfilActivity.class);
+                    startActivity(intent);
                     break;
             }
 
