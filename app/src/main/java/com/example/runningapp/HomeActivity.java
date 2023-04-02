@@ -101,20 +101,21 @@ public class HomeActivity extends AppCompatActivity {
                     replaceFragment(new HomeFragment());
                     break;
                 case R.id.calentamiento:
-                    replaceFragment(new CalentamientoFragment());
+                    Intent intent = new Intent(HomeActivity.this, CalentamientoActivity1.class);
+                    startActivity(intent);
                     break;
                 case R.id.ranking:
                     replaceFragment(new RankingFragment());
                     break;
                 case R.id.estadisticas:
-                    Intent intent = new Intent(HomeActivity.this, EstadisticasActivity.class);
-                    startActivity(intent);
+                    Intent intent1 = new Intent(HomeActivity.this, EstadisticasActivity.class);
+                    startActivity(intent1);
                     break;
                 case R.id.comunidad:
                     replaceFragment(new SocialFragment());
                     break;
-                case R.id.chat:
-                    replaceFragment(new ChatFragment());
+                case R.id.aprendizaje:
+                    replaceFragment(new AprendizajeFragment());
                     break;
                 case R.id.about:
                     replaceFragment(new AboutFragment());

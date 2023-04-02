@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CalentamientoFragment#newInstance} factory method to
+ * Use the {@link AprendizajeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CalentamientoFragment extends Fragment {
+public class AprendizajeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,7 +23,7 @@ public class CalentamientoFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public CalentamientoFragment() {
+    public AprendizajeFragment() {
         // Required empty public constructor
     }
 
@@ -36,8 +36,8 @@ public class CalentamientoFragment extends Fragment {
      * @return A new instance of fragment CalentamientoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CalentamientoFragment newInstance(String param1, String param2) {
-        CalentamientoFragment fragment = new CalentamientoFragment();
+    public static AprendizajeFragment newInstance(String param1, String param2) {
+        AprendizajeFragment fragment = new AprendizajeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -58,6 +58,6 @@ public class CalentamientoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calentamiento, container, false);
+        return inflater.inflate(R.layout.fragment_aprendizaje, container, false);
     }
 }

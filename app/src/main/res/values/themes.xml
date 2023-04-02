@@ -16,9 +16,9 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="SplashTheme" parent="Theme.AppCompat">
+    <!--<style name="SplashTheme" parent="Theme.AppCompat">
         <item name="android:windowBackground">@drawable/splash_screen</item>
-    </style>
+    </style>-->
 
     <style name="line">
         <item name="android:background">@color/lavender</item>

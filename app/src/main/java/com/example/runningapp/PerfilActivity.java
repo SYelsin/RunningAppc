@@ -27,7 +27,7 @@ public class PerfilActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(PerfilActivity.this);
-                View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit, null);
+                View dialogView = getLayoutInflater().inflate(R.layout.dialog_forgot, null);
                 EditText emailBox = dialogView.findViewById(R.id.emailBox);
                 builder.setView(dialogView);
                 AlertDialog dialog = builder.create();

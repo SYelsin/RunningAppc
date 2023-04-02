@@ -16,6 +16,10 @@
             android:id="@+id/estadisticas"
             android:icon="@drawable/tendencia"
             android:title="Estadisticas" />
+        <item
+        android:id="@+id/aprendizaje"
+        android:icon="@drawable/youtube"
+        android:title="Centro de Aprendizaje" />
 
     <item android:title="Social">
         <menu>
@@ -27,10 +31,7 @@
                 android:id="@+id/comunidad"
                 android:icon="@drawable/comunidad"
                 android:title="Comunidad" />
-            <item
-                android:id="@+id/chat"
-                android:icon="@drawable/ic_baseline_message_24"
-                android:title="Chat" />
+
         </menu>
     </item>
     <item android:title="Perfil">
