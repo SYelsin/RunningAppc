@@ -34,6 +34,19 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/signup_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/userl"
+                android:drawablePadding="8dp"
+                android:hint="Nombre"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
                 android:id="@+id/signup_email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -47,6 +60,19 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/signup_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/userl"
+                android:drawablePadding="8dp"
+                android:hint="Usuario"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
                 android:id="@+id/signup_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -55,6 +81,7 @@
                 android:drawableLeft="@drawable/padlock"
                 android:drawablePadding="8dp"
                 android:hint="Password"
+                android:inputType="textVisiblePassword"
                 android:padding="8dp"
                 android:textColor="@color/black"
                 android:textSize="16sp" />

@@ -25,11 +25,12 @@
                 android:layout_margin="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/usuario1"
+                android:src="@drawable/perfil"
                 app:civ_border_color="@color/black"
                 app:civ_border_width="2dp"></de.hdodenhof.circleimageview.CircleImageView>
 
             <TextView
+                android:id="@+id/perfilusuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -69,6 +70,7 @@
                         android:textSize="17dp" />
 
                     <TextView
+                        android:id="@+id/perfildistancia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="100 Km"
@@ -92,6 +94,7 @@
                         android:textSize="17dp" />
 
                     <TextView
+                        android:id="@+id/perfiltiempo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="10:50:54"
@@ -115,6 +118,7 @@
                         android:textSize="17dp" />
 
                     <TextView
+                        android:id="@+id/perfilcalorias"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="87.5"
@@ -136,23 +140,28 @@
         android:orientation="vertical"
         android:gravity="center"
         android:layout_marginTop="30dp">
+
         <LinearLayout
+            android:id="@+id/perfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="25dp">
+            android:layout_marginLeft="25dp"
+            android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:src="@drawable/baseline_account_circle_24"/>
+                android:src="@drawable/baseline_account_circle_24" />
+
             <TextView
+                android:id="@+id/perfilnombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="15dp"
                 android:text="Shakira Guadalupe Paz"
                 android:textColor="#000"
-                android:textSize="18dp"
-                android:paddingLeft="15dp"
-                android:layout_gravity="center_vertical"/>
+                android:textSize="18dp" />
 
         </LinearLayout>
         <LinearLayout
@@ -165,14 +174,16 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:src="@drawable/baseline_email_24"/>
+
             <TextView
+                android:id="@+id/perfilcorreo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="15dp"
                 android:text="shakira@gmail.com"
                 android:textColor="#000"
-                android:textSize="18dp"
-                android:paddingLeft="15dp"
-                android:layout_gravity="center_vertical"/>
+                android:textSize="18dp" />
 
         </LinearLayout>
         <LinearLayout
@@ -185,14 +196,16 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:src="@drawable/baseline_fitness_center_24"/>
+
             <TextView
+                android:id="@+id/perfilpeso"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="15dp"
                 android:text="60 kl"
                 android:textColor="#000"
-                android:textSize="18dp"
-                android:paddingLeft="15dp"
-                android:layout_gravity="center_vertical"/>
+                android:textSize="18dp" />
 
         </LinearLayout>
         <LinearLayout
@@ -205,14 +218,16 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:src="@drawable/baseline_straighten_24"/>
+
             <TextView
+                android:id="@+id/perfilestatura"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="15dp"
                 android:text="170 cm"
                 android:textColor="#000"
-                android:textSize="18dp"
-                android:paddingLeft="15dp"
-                android:layout_gravity="center_vertical"/>
+                android:textSize="18dp" />
 
         </LinearLayout>
     </LinearLayout>

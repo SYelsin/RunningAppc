@@ -26,12 +26,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -59,32 +65,10 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String email = loginEmail.getText().toString();
-                String pass = loginPassword.getText().toString();
-                if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    if (!pass.isEmpty()) {
-                        auth.signInWithEmailAndPassword(email, pass)
-                                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                    @Override
-                                    public void onSuccess(AuthResult authResult) {
-                                        Toast.makeText(LoginActivity.this, "Ingreso Exitoso", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                                        finish();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(LoginActivity.this, "Ingreso fallido", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    } else {
-                        loginPassword.setError("No se permiten campos vacíos");
-                    }
-                } else if (email.isEmpty()) {
-                    loginEmail.setError("No se permiten campos vacíos");
+            public void onClick(View view) {
+                if (!validateUsername() | !validatePassword()) {
                 } else {
-                    loginEmail.setError("Datos incorrectos");
+                    checkUser();
                 }
             }
         });
@@ -95,9 +79,10 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, sign_up_activity.class));
             }
         });
+
         recuperarcontra.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                 View dialogView = getLayoutInflater().inflate(R.layout.dialog_forgot, null);
                 EditText emailBox = dialogView.findViewById(R.id.emailBox);
@@ -107,11 +92,40 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         String userEmail = emailBox.getText().toString();
-                        if (TextUtils.isEmpty(userEmail) && !Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()){
-                            Toast.makeText(LoginActivity.this, "Por favor ingrese su correo", Toast.LENGTH_SHORT).show();
+                        if (TextUtils.isEmpty(userEmail) || !Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
+                            Toast.makeText(LoginActivity.this, "Ingrese un correo electrónico válido", Toast.LENGTH_SHORT).show();
                             return;
                         }
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+                        Query query = ref.orderByChild("email").equalTo(userEmail);
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    // El correo electrónico proporcionado se encuentra en la base de datos, envíe un correo electrónico de recuperación de contraseña
+                                    FirebaseAuth.getInstance().sendPasswordResetEmail(userEmail)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(LoginActivity.this, "Se envió un correo electrónico de recuperación de contraseña a " + userEmail, Toast.LENGTH_SHORT).show();
+                                                        dialog.dismiss();
+                                                    } else {
+                                                        Toast.makeText(LoginActivity.this, "No se pudo enviar el correo electrónico de recuperación a " + userEmail, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+                                } else {
+                                    // El correo electrónico proporcionado no se encuentra en la base de datos
+                                    Toast.makeText(LoginActivity.this, "El correo electrónico proporcionado no está registrado", Toast.LENGTH_SHORT).show();
+                                }
+                            }
 
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Toast.makeText(LoginActivity.this, "Error al buscar correo electrónico en la base de datos", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
                 dialogView.findViewById(R.id.btnCancel).setOnClickListener(new View.OnClickListener() {
@@ -120,34 +134,35 @@ public class LoginActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-                if (dialog.getWindow() != null){
+                if (dialog.getWindow() != null) {
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
                 }
                 dialog.show();
             }
         });
 
+
         gOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gClient = GoogleSignIn.getClient(this, gOptions);
         GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(this);
-        if (gAccount != null){
+        if (gAccount != null) {
             finish();
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
         }
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK){
+                        if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
                             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                             try {
                                 task.getResult(ApiException.class);
                                 finish();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                 startActivity(intent);
-                            } catch (ApiException e){
+                            } catch (ApiException e) {
                                 Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -156,11 +171,100 @@ public class LoginActivity extends AppCompatActivity {
         googleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent signInIntent = gClient.getSignInIntent();
                 activityResultLauncher.launch(signInIntent);
             }
         });
     }
 
+    public Boolean validateUsername() {
+        String val = loginEmail.getText().toString();
+        if (val.isEmpty()) {
+            loginEmail.setError("Ingrese su usuario");
+            return false;
+        } else {
+            loginEmail.setError(null);
+            return true;
+        }
     }
+
+    public Boolean validatePassword() {
+        String val = loginPassword.getText().toString();
+        if (val.isEmpty()) {
+            loginPassword.setError("Ingrese su contraseña");
+            return false;
+        } else {
+            loginPassword.setError(null);
+            return true;
+        }
+    }
+
+    public void checkUser() {
+        String userUsername = loginEmail.getText().toString().trim();
+        String userPassword = loginPassword.getText().toString().trim();
+
+        // Validate the user input
+        if (userUsername.isEmpty()) {
+            loginEmail.setError("Please enter your email address");
+            loginEmail.requestFocus();
+            return;
+        }
+
+        if (userPassword.isEmpty()) {
+            loginPassword.setError("Please enter your password");
+            loginPassword.requestFocus();
+            return;
+        }
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+
+        mAuth.signInWithEmailAndPassword(userUsername, userPassword)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        try {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = mAuth.getCurrentUser();
+
+                                // Create a reference to the user's data in the "users" table
+                                Query checkUserDatabase = reference.orderByChild("email").equalTo(userUsername);
+
+                                checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()) {
+                                            loginEmail.setError(null);
+
+                                            // Get the user's data from the database
+                                            DataSnapshot userSnapshot = snapshot.getChildren().iterator().next();
+                                            String usernameFromDB = userSnapshot.child("username").getValue(String.class);
+                                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                            intent.putExtra("username", usernameFromDB);
+                                            startActivity(intent);
+                                            finish();
+
+                                        } else {
+                                            loginEmail.setError("El usuario no existe");
+                                            loginEmail.requestFocus();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        // Handle error
+                                    }
+                                });
+                            } else {
+                                loginEmail.setError("Usuario o contraseña incorrectos");
+                                loginEmail.requestFocus();
+                            }
+                        } catch (Exception e) {
+                            // Handle exception
+                        }
+                    }
+                });
+    }
+
+
+}

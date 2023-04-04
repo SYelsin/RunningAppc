@@ -1,12 +1,12 @@
 package com.example.runningapp;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +19,10 @@ public class HomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private int mTiempo,mritmo;
+    double mDistancia, mCalorias;
+
+   private int mpasos;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -56,9 +60,30 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        TextView ritmotxt = view.findViewById(R.id.txtritmo);
+        TextView duracion = view.findViewById(R.id.txtduracion);
+        TextView caloriastxt = view.findViewById(R.id.txtcalorias);
+        TextView distanciatxt = view.findViewById(R.id.txtdistancia);
+        TextView pasostxt = view.findViewById(R.id.txtpasos);
+
+        datos myApp = (datos) getActivity().getApplicationContext();
+        mCalorias = myApp.getCalorias();
+        mDistancia = myApp.getDistancia();
+        mTiempo = myApp.getTiempo();
+        mpasos = myApp.getPasos();
+        mritmo = myApp.getRitmo();
+        duracion.setText(Integer.toString(mTiempo)+" hrs");
+        ritmotxt.setText(Integer.toString(mritmo)+" m/min");
+        caloriastxt.setText(Double.toString(mCalorias));
+        distanciatxt.setText(Double.toString(mDistancia));
+        pasostxt.setText(Integer.toString(mpasos));
+
+
+
+
+        return view;
     }
 }

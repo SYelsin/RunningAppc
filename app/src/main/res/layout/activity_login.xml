@@ -41,11 +41,12 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableLeft="@drawable/userl"
-                android:drawableTint="?attr/colorPrimary"
                 android:drawablePadding="8dp"
-                android:hint="Email"
+                android:drawableTint="?attr/colorPrimary"
+                android:hint="Usuario"
                 android:padding="8dp"
-                android:textColor="?attr/colorPrimary" />
+                android:textColor="?attr/colorPrimary"
+                android:textSize="14dp" />
 
             <EditText
                 android:id="@+id/login_password"
@@ -54,12 +55,13 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableLeft="@drawable/padlock"
-                android:drawableTint="?attr/colorPrimary"
                 android:drawablePadding="8dp"
+                android:drawableTint="?attr/colorPrimary"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="8dp"
-                android:textColor="?attr/colorPrimary" />
+                android:textColor="?attr/colorPrimary"
+                android:textSize="14dp" />
 
 
 

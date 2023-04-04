@@ -47,7 +47,7 @@
                       android:src="@drawable/calorias" />
 
                   <TextView
-                      android:id="@+id/TV_STEPS"
+                      android:id="@+id/txtcalorias"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="0"
@@ -91,7 +91,7 @@
                          android:src="@drawable/metro" />
 
                      <TextView
-                         android:id="@+id/TV_DISTANCE2"
+                         android:id="@+id/txtdistancia"
                          android:layout_width="match_parent"
                          android:layout_height="match_parent"
                          android:drawablePadding="10dp"
@@ -132,7 +132,7 @@
                          android:src="@drawable/pasos" />
 
                      <TextView
-                         android:id="@+id/TV_DISTANCE10"
+                         android:id="@+id/txtpasos"
                          android:layout_width="match_parent"
                          android:layout_height="match_parent"
                          android:drawablePadding="10dp"
@@ -178,7 +178,7 @@
                       android:src="@drawable/ritmo" />
 
                   <TextView
-                      android:id="@+id/TV_CALORIEw"
+                      android:id="@+id/txtritmo"
                       android:layout_width="match_parent"
                       android:layout_height="match_parent"
                       android:drawablePadding="10dp"
@@ -221,7 +221,7 @@
                       android:src="@drawable/duracion" />
 
                   <TextView
-                      android:id="@+id/TV_CALORIES"
+                      android:id="@+id/txtduracion"
                       android:layout_width="match_parent"
                       android:layout_height="match_parent"
                       android:drawablePadding="10dp"
