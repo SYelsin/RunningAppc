@@ -1,6 +1,5 @@
 package com.example.runningapp.chat;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,22 +10,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.learnoset.chatapplication.MemoryData;
-import com.learnoset.chatapplication.R;
+import com.example.runningapp.R;
+import com.example.runningapp.datos;
 
 import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
-
+    private final datos myApp;
     private List<ChatList> chatLists;
-    private final String userMobile;
+    private final String username;
 
     public ChatAdapter(List<ChatList> chatLists, Context context) {
         this.chatLists = chatLists;
-        this.userMobile = MemoryData.getMobile(context);
+        this.myApp = (datos) context.getApplicationContext();
+        this.username = myApp.getUsername();
     }
 
-    @SuppressLint("InflateParams")
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,10 +37,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
         ChatList list2 = chatLists.get(position);
 
-        if (list2.getMobile().equals(userMobile)) {
+        if (list2.getUsername().equals(username)) {
             holder.myLayout.setVisibility(View.VISIBLE);
             holder.oppoLayout.setVisibility(View.GONE);
-
             holder.myMessage.setText(list2.getMessage());
             holder.myTime.setText(list2.getDate() + " " + list2.getTime());
         } else {

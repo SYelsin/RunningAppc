@@ -18,7 +18,7 @@
 
             <TextView
                 android:id="@+id/oppoMessage"
-                android:padding="20dp"
+                android:padding="15dp"
                 android:background="@drawable/opo_msg_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
             <TextView
                 android:layout_gravity="end"
                 android:id="@+id/myMessage"
-                android:padding="20dp"
+                android:padding="15dp"
                 android:background="@drawable/my_msg_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

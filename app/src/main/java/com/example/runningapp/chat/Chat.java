@@ -12,13 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.runningapp.MemoryData;
+import com.example.runningapp.R;
+import com.example.runningapp.datos;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.learnoset.chatapplication.MemoryData;
-import com.learnoset.chatapplication.R;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -36,7 +37,7 @@ public class Chat extends AppCompatActivity {
     // creating database reference
     private DatabaseReference databaseReference;
 
-    private String userMobileNumber = "";
+    private String username = "";
     private String chatKey = "";
     private RecyclerView chattingRecyclerView;
     private ChatAdapter chatAdapter;
@@ -47,7 +48,7 @@ public class Chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        final ImageView backBtn = findViewById(R.id.backBtn);
+
         final TextView nameTV = findViewById(R.id.name);
         final EditText messageEditText = findViewById(R.id.messageEditTxt);
         final ImageView sendBtn = findViewById(R.id.sendBtn);
@@ -59,18 +60,18 @@ public class Chat extends AppCompatActivity {
 
         // getting database reference
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl(getString(R.string.database_url));
-
+        datos myApp = (datos) getApplicationContext();
         // getting chat and other user details from intent extra
         final String getName = getIntent().getStringExtra("full_name");
         chatKey = getIntent().getStringExtra("chat_key");
-        final String getMobile = getIntent().getStringExtra("mobile");
+        final String getUsername = getIntent().getStringExtra("username");
 
-        // get user's mobile number from memory
-        userMobileNumber = MemoryData.getMobile(this);
+
+        username= myApp.getUsername();
 
         // generate chat key if empty
         if (chatKey.isEmpty()) {
-            chatKey = userMobileNumber + getMobile;
+            chatKey = username + getUsername;
         }
 
         // setting other user's full name to TextView
@@ -91,8 +92,8 @@ public class Chat extends AppCompatActivity {
                 // getting all chat messages from chat key
                 for (DataSnapshot chatMessages : snapshot.child("chat").child(chatKey).getChildren()) {
 
-                    // check if message and mobile exists in database
-                    if (chatMessages.hasChild("msg") && chatMessages.hasChild("mobile")) {
+
+                    if (chatMessages.hasChild("msg") && chatMessages.hasChild("username")) {
 
                         // getting message details
                         final long getMessageTimeStamps = Long.parseLong(Objects.requireNonNull(chatMessages.getKey()));
@@ -101,14 +102,14 @@ public class Chat extends AppCompatActivity {
                         if (loadingFirstTime || getMessageTimeStamps > lastSavedTimestamps) {
 
                             // getting chat messages
-                            final String getUserMobile = chatMessages.child("mobile").getValue(String.class);
+                            final String getUsername = chatMessages.child("username").getValue(String.class);
                             final String getMsg = chatMessages.child("msg").getValue(String.class);
 
                             final String messageDate = generateDateFromTimestamps(getMessageTimeStamps, "dd-MM-yyyy");
                             final String messageTime = generateDateFromTimestamps(getMessageTimeStamps, "hh:mm aa");
 
                             // chat list
-                            final ChatList chatList = new ChatList(getUserMobile, getMsg, messageDate, messageTime);
+                            final ChatList chatList = new ChatList(getUsername, getMsg, messageDate, messageTime);
                             chatLists.add(chatList);
 
                             // updating chat list
@@ -123,7 +124,8 @@ public class Chat extends AppCompatActivity {
                 }
 
                 // data has loaded first time so assign the variable as false
-                loadingFirstTime = false;
+                //
+                //loadingFirstTime = false;
             }
 
             @Override
@@ -145,7 +147,7 @@ public class Chat extends AppCompatActivity {
                     final String currentTimestamp = String.valueOf(System.currentTimeMillis());
 
                     databaseReference.child("chat").child(chatKey).child(currentTimestamp).child("msg").setValue(getTxtMessage);
-                    databaseReference.child("chat").child(chatKey).child(currentTimestamp).child("mobile").setValue(userMobileNumber);
+                    databaseReference.child("chat").child(chatKey).child(currentTimestamp).child("username").setValue(username);
 
                     // clear edit text
                     messageEditText.setText("");
@@ -153,12 +155,7 @@ public class Chat extends AppCompatActivity {
             }
         });
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
     }
 
     private String generateDateFromTimestamps(long timestamps, String format) {

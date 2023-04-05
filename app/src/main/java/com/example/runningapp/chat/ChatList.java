@@ -2,17 +2,17 @@ package com.example.runningapp.chat;
 
 public class ChatList {
 
-    private final String mobile, message, date, time;
+    private final String username, message, date, time;
 
-    public ChatList(String mobile, String message, String date, String time) {
-        this.mobile = mobile;
+    public ChatList(String username, String message, String date, String time) {
+        this.username = username;
         this.message = message;
         this.date = date;
         this.time = time;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getUsername() {
+        return username;
     }
 
     public String getMessage() {

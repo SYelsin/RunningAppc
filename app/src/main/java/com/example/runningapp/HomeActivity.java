@@ -171,7 +171,8 @@ public class HomeActivity extends AppCompatActivity {
                     replaceFragment(new SocialFragment());
                     break;
                 case R.id.chat:
-                    replaceFragment(new ChatFragment());
+                    Intent intentc = new Intent(HomeActivity.this, Mainchat.class);
+                    startActivity(intentc);
                     break;
                 case R.id.perfil:
                     Intent intent = new Intent(HomeActivity.this, PerfilActivity.class);
@@ -235,7 +236,8 @@ public class HomeActivity extends AppCompatActivity {
                     fragment = new SocialFragment();
                     break;
                 case R.id.chat:
-                    fragment = new ChatFragment();
+                    Intent intentc = new Intent(HomeActivity.this, Mainchat.class);
+                    startActivity(intentc);
                     break;
                 case R.id.perfil:
 

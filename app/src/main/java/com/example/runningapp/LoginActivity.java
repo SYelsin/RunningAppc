@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -227,36 +228,66 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
 
-                                // Create a reference to the user's data in the "users" table
-                                Query checkUserDatabase = reference.orderByChild("email").equalTo(userUsername);
+                                if (user.isEmailVerified()) {
+                                    // Create a reference to the user's data in the "users" table
+                                    Query checkUserDatabase = reference.orderByChild("email").equalTo(userUsername);
 
-                                checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        if (snapshot.exists()) {
-                                            loginEmail.setError(null);
+                                    checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                loginEmail.setError(null);
 
-                                            // Get the user's data from the database
-                                            DataSnapshot userSnapshot = snapshot.getChildren().iterator().next();
-                                            String usernameFromDB = userSnapshot.child("username").getValue(String.class);
-                                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                            intent.putExtra("username", usernameFromDB);
-                                            startActivity(intent);
-                                            finish();
+                                                // Get the user's data from the database
+                                                DataSnapshot userSnapshot = snapshot.getChildren().iterator().next();
+                                                String usernameFromDB = userSnapshot.child("username").getValue(String.class);
+                                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                                intent.putExtra("username", usernameFromDB);
+                                                startActivity(intent);
+                                                finish();
 
-                                        } else {
-                                            loginEmail.setError("El usuario no existe");
-                                            loginEmail.requestFocus();
+                                            } else {
+                                                loginEmail.setError("El usuario no existe");
+                                                loginEmail.requestFocus();
+                                            }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                        // Handle error
-                                    }
-                                });
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            // Handle error
+                                        }
+                                    });
+                                } else {
+                                    LayoutInflater inflater = getLayoutInflater();
+                                    View dialogView = inflater.inflate(R.layout.custom_alert_dialog, null);
+
+                                    TextView title = dialogView.findViewById(R.id.alert_title);
+                                    title.setText("Verificar correo \uD83D\uDE0C");
+
+                                    TextView message = dialogView.findViewById(R.id.alert_message);
+                                    message.setText("Por favor, verifica tu correo electrónico antes de iniciar sesión");
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                                    builder.setView(dialogView)
+                                            .setPositiveButton("Aceptar", null)
+                                            .show();
+
+
+                                }
                             } else {
-                                loginEmail.setError("Usuario o contraseña incorrectos");
+                                LayoutInflater inflater = getLayoutInflater();
+                                View dialogView = inflater.inflate(R.layout.custom_alert_dialog, null);
+
+                                TextView title = dialogView.findViewById(R.id.alert_title);
+                                title.setText("Datos incorrectos \uD83D\uDE14");
+
+                                TextView message = dialogView.findViewById(R.id.alert_message);
+                                message.setText("Usuario o contraseña incorrecta \nVuelva a intentarlo");
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                                builder.setView(dialogView)
+                                        .setPositiveButton("Aceptar", null)
+                                        .show();
                                 loginEmail.requestFocus();
                             }
                         } catch (Exception e) {
@@ -265,6 +296,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
 
 }

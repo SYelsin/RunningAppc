@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -38,13 +40,6 @@
                 android:textColor="#424242"
                 android:textStyle="bold"
                 android:textSize="18sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:text="Online"
-                android:layout_marginTop="2dp"
-                android:textColor="#00C853"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -60,27 +55,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/purple_500"
+        android:background="#FFF"
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
 
         <EditText
             android:id="@+id/messageEditTxt"
-            android:layout_toStartOf="@+id/sendBtn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:backgroundTint="@android:color/transparent"
-            android:textSize="14sp"
-            android:layout_marginEnd="10dp"
             android:layout_marginStart="20dp"
-            android:hint="Type something..."/>
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/sendBtn"
+            android:background="@drawable/custom_edittext"
+            android:backgroundTint="#F9F9F9"
+            android:hint="Mensaje"
+            android:padding="15dp"
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/sendBtn"
-            android:src="@drawable/send"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/lavender"
+            android:src="@drawable/send" />
     </RelativeLayout>
 </RelativeLayout>
