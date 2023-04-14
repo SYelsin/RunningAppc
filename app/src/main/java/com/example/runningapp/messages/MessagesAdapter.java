@@ -7,12 +7,14 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.runningapp.R;
 import com.example.runningapp.chat.Chat;
 
@@ -42,6 +44,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
         MessagesList list2 = messagesLists.get(position);
 
         holder.name.setText(list2.getFullName());
+        Glide.with(context).load(list2.getFoto()).into(holder.perfilfoto);
         holder.lastMessage.setText(list2.getLastMessage());
 
         if (list2.getUnseenMessages() == 0) {
@@ -69,7 +72,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
                 intent.putExtra("username", list2.getUsername());
                 intent.putExtra("full_name", list2.getFullName());
                 intent.putExtra("chat_key", list2.getChatKey());
-
+                intent.putExtra("profile", list2.getFoto());
                 // launch Chat activity
                 context.startActivity(intent);
             }
@@ -92,6 +95,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
         final private TextView name;
         final private TextView lastMessage;
         final private TextView unseenMessages;
+
+        final private ImageView perfilfoto;
         final private LinearLayout rootLayout;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -101,6 +106,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
             lastMessage = itemView.findViewById(R.id.lastMessage);
             unseenMessages = itemView.findViewById(R.id.unseenMessages);
             rootLayout = itemView.findViewById(R.id.rootLayout);
+            perfilfoto = itemView.findViewById(R.id.profilePic);
         }
     }
 }

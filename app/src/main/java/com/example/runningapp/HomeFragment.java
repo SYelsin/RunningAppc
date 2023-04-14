@@ -1,12 +1,22 @@
 package com.example.runningapp;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,8 +29,9 @@ public class HomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private int mTiempo,mritmo;
-    double mDistancia, mCalorias;
+    private String mTiempo,mritmo;
+    String  mCalorias;
+    String mDistancia, mUsername;
 
    private int mpasos;
 
@@ -70,16 +81,39 @@ public class HomeFragment extends Fragment {
         TextView pasostxt = view.findViewById(R.id.txtpasos);
 
         datos myApp = (datos) getActivity().getApplicationContext();
-        mCalorias = myApp.getCalorias();
-        mDistancia = myApp.getDistancia();
-        mTiempo = myApp.getTiempo();
-        mpasos = myApp.getPasos();
-        mritmo = myApp.getRitmo();
-        duracion.setText(Integer.toString(mTiempo)+" hrs");
-        ritmotxt.setText(Integer.toString(mritmo)+" m/min");
-        caloriastxt.setText(Double.toString(mCalorias));
-        distanciatxt.setText(Double.toString(mDistancia));
-        pasostxt.setText(Integer.toString(mpasos));
+        mUsername = myApp.getUsername();
+
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(mUsername);
+
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    mUsername = snapshot.child("username").getValue().toString();
+                    mCalorias = snapshot.child("calorias").getValue().toString();
+                    mDistancia =snapshot.child("distancia").getValue().toString();
+                    mTiempo = snapshot.child("tiempo").getValue().toString();
+                    mritmo = snapshot.child("ritmo").getValue().toString();
+                    mpasos = Integer.parseInt(snapshot.child("pasos").getValue().toString());
+                    // actualizar los campos de TextViews
+                    duracion.setText(mTiempo +" hrs");
+                    ritmotxt.setText(mritmo +" m/min");
+                    caloriastxt.setText(mCalorias);
+                    distanciatxt.setText(mDistancia);
+                    pasostxt.setText(Integer.toString(mpasos));
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "loadPost:onCancelled", error.toException());
+            }
+        });
+
+
+
 
 
 

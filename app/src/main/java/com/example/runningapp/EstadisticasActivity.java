@@ -3,14 +3,13 @@ package com.example.runningapp;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -21,9 +20,16 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EstadisticasActivity extends AppCompatActivity {
 
@@ -34,135 +40,178 @@ public class EstadisticasActivity extends AppCompatActivity {
         // Obtén una referencia al gráfico PieChart en tu diseño
         PieChart pieChart = findViewById(R.id.chart);
 
-        // Configura el gráfico
-        pieChart.setUsePercentValues(true);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5, 10, 5, 5);
-        pieChart.setDragDecelerationFrictionCoef(0.95f);
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleColor(Color.WHITE);
-        pieChart.setTransparentCircleRadius(61f);
-        pieChart.setHoleRadius(58f);
+        // Obtén el ID del usuario actual
+        datos myApp = (datos) getApplicationContext();
+        String usuarioActual = myApp.getUsername();
 
-        // Crea una lista de entradas de datos para el gráfico de pastel
+        // Obtén los datos de Firebase y crea una lista de entradas de datos para el gráfico de pastel
         List<PieEntry> pieEntries = new ArrayList<>();
-        pieEntries.add(new PieEntry(45f, "10/03/2023"));
-        pieEntries.add(new PieEntry(25f, "11/03/2023"));
-        pieEntries.add(new PieEntry(10f, "12/03/2023"));
-        pieEntries.add(new PieEntry(20f, "13/03/2023"));
-        pieEntries.add(new PieEntry(30f, "14/03/2023"));
 
-        // Crea un conjunto de datos para el gráfico de pastel
-        PieDataSet pieDataSet = new PieDataSet(pieEntries, "Fecha");
-        pieDataSet.setSliceSpace(3f);
-        pieDataSet.setSelectionShift(5f);
-        pieDataSet.setColors(Color.parseColor("#FF9800"), Color.parseColor("#2196F3"),
-                Color.parseColor("#4CAF50"), Color.parseColor("#E91E63"),Color.parseColor("#800080"));
+        FirebaseDatabase.getInstance().getReference("ejercicios").orderByChild("userId").equalTo(usuarioActual).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    double calorias = snapshot.child("calorias").getValue(double.class);
+                    String fecha = snapshot.child("fecha").getValue(String.class);
+                    pieEntries.add(new PieEntry((float) calorias,fecha)); //La clave sería la fecha.
+                }
+                // Crea un conjunto de datos para el gráfico de pastel
+                PieDataSet pieDataSet = new PieDataSet(pieEntries, "Fecha");
+                pieDataSet.setSliceSpace(3f);
+                pieDataSet.setSelectionShift(5f);
+                pieDataSet.setColors(Color.parseColor("#FF9800"), Color.parseColor("#2196F3"),
+                        Color.parseColor("#4CAF50"), Color.parseColor("#E91E63"), Color.parseColor("#800080"));
 
-        // Crea un objeto PieData para agregar a tu gráfico
-        PieData pieData = new PieData(pieDataSet);
-        pieData.setValueTextSize(10f);
-        pieData.setValueTextColor(Color.YELLOW);
+                // Crea un objeto PieData para agregar a tu gráfico
+                PieData pieData = new PieData(pieDataSet);
+                pieData.setValueTextSize(10f);
+                pieData.setValueTextColor(Color.YELLOW);
+                pieChart.setNoDataText("Aun no hay estadisticas por mostrar");
 
-        // Agrega el objeto PieData a tu gráfico
-        pieChart.setData(pieData);
 
-        // Actualiza tu gráfico
-        pieChart.invalidate();
-        // Calorias
-        ArrayList<Integer> calorias = new ArrayList<>();
-        calorias.add(1000);
-        calorias.add(1200);
-        calorias.add(900);
-        calorias.add(1500);
-        calorias.add(800);
 
-        // Distancia
-        ArrayList<Float> distancias = new ArrayList<>();
-        distancias.add(5f);
-        distancias.add(7f);
-        distancias.add(4.5f);
-        distancias.add(8f);
-        distancias.add(3f);
 
-        ArrayList<String> dias = new ArrayList<>();
-        dias.add("10/03/2023");
-        dias.add("11/03/2023");
-        dias.add("12/03/2023");
-        dias.add("13/03/2023");
-        dias.add("14/03/2023");
+                // Agrega el objeto PieData a tu gráfico
+                pieChart.setData(pieData);
 
-        // Crea los puntos de datos para el gráfico
+                // Actualiza tu gráfico
+                pieChart.invalidate();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Manejar errores aquí
+            }
+        });
+
+
+        BarChart barChart = findViewById(R.id.barChart);
+
+        FirebaseDatabase.getInstance().getReference("ejercicios").orderByChild("userId").equalTo(usuarioActual).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Map<String, Float> totalDistances = new HashMap<>();
+                List<String> xValues = new ArrayList<>(); // Agregamos una lista para almacenar las etiquetas del eje X
+                int i = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String userId = snapshot.child("userId").getValue(String.class);
+                    double distance = snapshot.child("distancia").getValue(double.class);
+                    String dias = snapshot.child("fecha").getValue(String.class);
+                    if (userId != null) {
+                        totalDistances.put(dias, (float) distance);
+                        xValues.add(dias); // Agregamos el valor de "dias" a la lista de etiquetas
+                    }
+                }
+                // Crea una lista de entradas de datos para el gráfico de barras
+                List<BarEntry> barEntries = new ArrayList<>();
+                i = 0;
+                for (Map.Entry<String, Float> entry : totalDistances.entrySet()) {
+                    barEntries.add(new BarEntry(i++, entry.getValue()));
+                }
+
+                // Crea un conjunto de datos para el gráfico de barras
+                BarDataSet barDataSet = new BarDataSet(barEntries, "Distancia (km)");
+                barChart.setNoDataText("Aun no hay estadisticas por mostrar");
+
+// Definir una paleta de colores dinámica
+                barDataSet.setColors(Color.parseColor("#FF9800"), Color.parseColor("#2196F3"),
+                        Color.parseColor("#4CAF50"), Color.parseColor("#E91E63"), Color.parseColor("#800080"));
+
+
+                // Crea un objeto BarData para agregar a tu gráfico
+                BarData barData = new BarData(barDataSet);
+                barData.setBarWidth(0.9f);
+
+                // Agrega el objeto BarData a tu gráfico
+                barChart.setData(barData);
+
+                // Personaliza la apariencia del gráfico de barras
+                barChart.setFitBars(true);
+                barChart.getDescription().setEnabled(false);
+                barChart.getAxisLeft().setAxisMinimum(0f);
+                barChart.getAxisRight().setAxisMinimum(0f);
+
+                // Agrega las etiquetas del eje X
+                XAxis xAxis = barChart.getXAxis();
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                xAxis.setGranularity(1f);
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(xValues));
+
+                // Actualiza tu gráfico
+                barChart.invalidate();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Manejar errores aquí
+            }
+        });
+
+        LineChart lineChart = findViewById(R.id.lineChart);
+
+// Obtén los datos de Firebase y crea una lista de entradas de datos para el gráfico de línea
         List<Entry> entries = new ArrayList<>();
+        List<String> labels = new ArrayList<>();
 
-        for (int i = 0; i < calorias.size(); i++) {
-            entries.add(new Entry(i, calorias.get(i)));
-        }
+        FirebaseDatabase.getInstance().getReference("ejercicios").orderByChild("userId").equalTo(myApp.getUsername())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            double duracion = snapshot.child("tiempo").getValue(double.class);
+                            String fecha = snapshot.child("fecha").getValue(String.class);
+                            entries.add(new Entry(entries.size(),(float) duracion));
+                            labels.add(fecha);
+                        }
 
-        // Crea los puntos de datos para el gráfico
-        List<BarEntry> entriesb = new ArrayList<>();
-
-        for (int i = 0; i < distancias.size(); i++) {
-            entriesb.add(new BarEntry(i, distancias.get(i)));
-        }
-
-        // Configura el conjunto de datos de la línea
-        LineDataSet dataSet = new LineDataSet(entries, "Calorías quemadas por día");
-        dataSet.setColor(Color.BLUE);
-        dataSet.setLineWidth(2f);
-        dataSet.setDrawCircles(false);
-        dataSet.setDrawValues(false);
-
-        // Configura el conjunto de datos de la barra
-        BarDataSet dataSetb = new BarDataSet(entriesb, "Distancia recorrida por día");
-        dataSet.setColor(Color.BLUE);
-
-        // Crea el objeto LineData y configura el eje x
-        LineData lineData = new LineData(dataSet);
-        XAxis xAxis = ((LineChart) findViewById(R.id.lineChart)).getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(dias));
-        xAxis.setGranularity(1f);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
-        // Crea el objeto BarData y configura el eje x
-        BarData barData = new BarData(dataSetb);
-        XAxis xAxisb = ((BarChart) findViewById(R.id.barChart)).getXAxis();
-        xAxisb.setValueFormatter(new IndexAxisValueFormatter(dias));
-        xAxisb.setGranularity(1f);
-        xAxisb.setPosition(XAxis.XAxisPosition.BOTTOM);
-
-        // Configura los ejes y la leyenda del gráfico
-        YAxis yAxisLeft = ((LineChart) findViewById(R.id.lineChart)).getAxisLeft();
-        yAxisLeft.setGranularity(1f);
-
-        YAxis yAxisRight = ((LineChart) findViewById(R.id.lineChart)).getAxisRight();
-        yAxisRight.setEnabled(false);
-
-        Legend legend = ((LineChart) findViewById(R.id.lineChart)).getLegend();
-        legend.setEnabled(false);
-
-        // Configura los ejes y la leyenda del gráfico
-        YAxis yAxisLeftb = ((BarChart) findViewById(R.id.barChart)).getAxisLeft();
-        yAxisLeftb.setGranularity(1f);
-
-        YAxis yAxisRightb = ((BarChart) findViewById(R.id.barChart)).getAxisRight();
-        yAxisRightb.setEnabled(false);
-
-        Legend legendb = ((BarChart) findViewById(R.id.barChart)).getLegend();
-        legendb.setEnabled(false);
+                        // Crea un conjunto de datos para el gráfico de línea
+                        LineDataSet dataSet = new LineDataSet(entries, "Duración (hrs)");
+                        dataSet.setColor(Color.RED);
+                        dataSet.setLineWidth(2f);
+                        dataSet.setCircleColor(Color.RED);
+                        dataSet.setCircleRadius(5f);
+                        dataSet.setDrawCircleHole(false);
+                        dataSet.setValueTextSize(10f);
+                        lineChart.setNoDataText("Aun no hay estadisticas por mostrar");
 
 
+                        // Crea un objeto LineData para agregar a tu gráfico
+                        LineData lineData = new LineData(dataSet);
 
-        // Configura algunas propiedades adicionales del gráfico y establece el LineData
-        ((LineChart) findViewById(R.id.lineChart)).setDescription(null);
-        ((LineChart) findViewById(R.id.lineChart)).setData(lineData);
-        ((LineChart) findViewById(R.id.lineChart)).invalidate();
+                        // Agrega las etiquetas de día al eje X del gráfico
 
-        // Configura algunas propiedades adicionales del gráfico y establece el BarData
-        ((BarChart) findViewById(R.id.barChart)).setDescription(null);
-        ((BarChart) findViewById(R.id.barChart)).setData(barData);
-        ((BarChart) findViewById(R.id.barChart)).setFitBars(true);
-        ((BarChart) findViewById(R.id.barChart)).invalidate();
+                        XAxis xAxis = lineChart.getXAxis();
+                        xAxis.setGranularity(1f);
+                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        xAxis.setValueFormatter(new ValueFormatter() {
+                            @Override
+                            public String getFormattedValue(float value) {
+                                int index = (int) value;
+                                if (index >= 0 && index < labels.size()) {
+                                    return labels.get(index);
+                                }
+                                return "";
+                            }
+                        });
+                        xAxis.setGranularity(1f);
+
+                        // Agrega el objeto LineData a tu gráfico
+                        lineChart.setData(lineData);
+
+                        // Actualiza tu gráfico
+                        lineChart.invalidate();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        // Manejar errores aquí
+                    }
+                });
+
+
+
+
+
 
     }
 }

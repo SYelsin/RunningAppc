@@ -7,25 +7,62 @@ public class datos extends Application {
     private String mEmail;
     private String mUsername;
 
-    private double distancia;
+    private String distancia;
 
-    public int getRitmo() {
+    private String mpeso;
+    private String maltura;
+    private String pais;
+    private String foto;
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public String getMpeso() {
+        return mpeso;
+    }
+
+    public void setMpeso(String mpeso) {
+        this.mpeso = mpeso;
+    }
+
+    public String getMaltura() {
+        return maltura;
+    }
+
+    public void setMaltura(String maltura) {
+        this.maltura = maltura;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getRitmo() {
         return ritmo;
     }
 
-    public void setRitmo(int ritmo) {
+    public void setRitmo(String ritmo) {
         this.ritmo = ritmo;
     }
 
-    public int getTiempo() {
+    public String getTiempo() {
         return tiempo;
     }
 
-    public void setTiempo(int tiempo) {
+    public void setTiempo(String tiempo) {
         this.tiempo = tiempo;
     }
 
-    private int ritmo, tiempo;
+    private String ritmo, tiempo;
 
 
 
@@ -39,24 +76,24 @@ public class datos extends Application {
     }
 
 
-    private  double calorias;
+    private  String calorias;
     private  int pasos;
 
-    public double getDistancia() {
+    public String getDistancia() {
         return distancia;
     }
 
-    public void setDistancia(double distancia) {
+    public void setDistancia(String distancia) {
         this.distancia = distancia;
     }
 
 
 
-    public double getCalorias() {
+    public String getCalorias() {
         return calorias;
     }
 
-    public void setCalorias(double calorias) {
+    public void setCalorias(String calorias) {
         this.calorias = calorias;
     }
 

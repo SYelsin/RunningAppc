@@ -1,16 +1,49 @@
 package com.example.runningapp;
 
 public class HelperClass {
-    private String name, email, username, password;
-    int tiempo,ritmo;
-    private double calorias, distancia;
+    private String name, email, username, password,fotoperfil, pais, peso,altura,distancia;
+    String tiempo,ritmo;
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getPeso() {
+        return peso;
+    }
+
+    public void setPeso(String peso) {
+        this.peso = peso;
+    }
+
+    public String getAltura() {
+        return altura;
+    }
+
+    public void setAltura(String altura) {
+        this.altura = altura;
+    }
+
+    private String calorias;
     private int pasos;
 
-    public int getRitmo() {
+    public String getFotoperfil() {
+        return fotoperfil;
+    }
+
+    public void setFotoperfil(String fotoperfil) {
+        this.fotoperfil = fotoperfil;
+    }
+
+    public String getRitmo() {
         return ritmo;
     }
 
-    public void setRitmo(int ritmo) {
+    public void setRitmo(String ritmo) {
         this.ritmo = ritmo;
     }
 
@@ -22,11 +55,16 @@ public class HelperClass {
         this.pasos = pasos;
     }
 
-    public HelperClass(String name, String email, String username, String password, int tiempo, int ritmo, double calorias, double distancia, int pasos) {
+
+    public HelperClass(String name, String email, String username, String password, String fotoperfil, String pais, String peso, String altura, String tiempo, String ritmo, String calorias, String distancia, int pasos) {
         this.name = name;
         this.email = email;
         this.username = username;
         this.password = password;
+        this.fotoperfil = fotoperfil;
+        this.pais = pais;
+        this.peso = peso;
+        this.altura = altura;
         this.tiempo = tiempo;
         this.ritmo = ritmo;
         this.calorias = calorias;
@@ -66,27 +104,27 @@ public class HelperClass {
         this.password = password;
     }
 
-    public int getTiempo() {
+    public String getTiempo() {
         return tiempo;
     }
 
-    public void setTiempo(int tiempo) {
+    public void setTiempo(String tiempo) {
         this.tiempo = tiempo;
     }
 
-    public double getCalorias() {
+    public String getCalorias() {
         return calorias;
     }
 
-    public void setCalorias(double calorias) {
+    public void setCalorias(String calorias) {
         this.calorias = calorias;
     }
 
-    public double getDistancia() {
+    public String getDistancia() {
         return distancia;
     }
 
-    public void setDistancia(double distancia) {
+    public void setDistancia(String distancia) {
         this.distancia = distancia;
     }
 

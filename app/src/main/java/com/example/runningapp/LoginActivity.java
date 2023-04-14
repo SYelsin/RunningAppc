@@ -1,6 +1,7 @@
 package com.example.runningapp;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -217,6 +218,12 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        // Create a progress dialog
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Verificando usuario...");
+        progressDialog.setCancelable(true);
+        progressDialog.show();
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
 
@@ -225,6 +232,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         try {
+                            progressDialog.dismiss();
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
 
@@ -280,7 +288,6 @@ public class LoginActivity extends AppCompatActivity {
 
                                 TextView title = dialogView.findViewById(R.id.alert_title);
                                 title.setText("Datos incorrectos \uD83D\uDE14");
-
                                 TextView message = dialogView.findViewById(R.id.alert_message);
                                 message.setText("Usuario o contraseña incorrecta \nVuelva a intentarlo");
 
@@ -299,4 +306,4 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-}
+    }

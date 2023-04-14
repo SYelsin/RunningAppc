@@ -1,13 +1,16 @@
 package com.example.runningapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.runningapp.messages.MessagesAdapter;
 import com.example.runningapp.messages.MessagesList;
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Mainchat extends AppCompatActivity {
 
@@ -37,6 +42,7 @@ public class Mainchat extends AppCompatActivity {
         setContentView(R.layout.chat_main);
 
         final RecyclerView messagesRecyclerView = findViewById(R.id.messagesRecyclerView);
+        final CircleImageView PerfilPic = findViewById(R.id.userProfilePic);
 
 
         final String username = MemoryData.getUsuario(this);
@@ -50,6 +56,16 @@ public class Mainchat extends AppCompatActivity {
         // set adapter to recyclerview
         messagesAdapter = new MessagesAdapter(userMessagesList, Mainchat.this);
         messagesRecyclerView.setAdapter(messagesAdapter);
+
+        Glide.with(this).load(myApp.getFoto()).into(PerfilPic);
+
+        PerfilPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Mainchat.this, PerfilActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // show progress bar while chat is being fetched from the database
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -79,7 +95,7 @@ public class Mainchat extends AppCompatActivity {
 
                             // getting user's full name
                             final String getUserFullName = dataSnapshot.child("username").getValue(String.class);
-
+                            final String getUserFoto = dataSnapshot.child("fotoperfil").getValue(String.class);
                             // getting last message from the chat
                             final String[] lastMessage = {""};
                             final int[] unseenMessagesCount = {0};
@@ -126,7 +142,7 @@ public class Mainchat extends AppCompatActivity {
                                         }
 
                                         // load chat/messages in the list
-                                        loadData(chatKey[0], getUserFullName, getUsername, lastMessage[0], unseenMessagesCount[0]);
+                                        loadData(chatKey[0], getUserFullName, getUsername, lastMessage[0], unseenMessagesCount[0],getUserFoto);
 
                                     }
 
@@ -134,13 +150,13 @@ public class Mainchat extends AppCompatActivity {
                                     public void onCancelled(@NonNull DatabaseError error) {
 
                                         // load chat/messages in the list
-                                        loadData(chatKey[0], getUserFullName, getUsername, lastMessage[0], unseenMessagesCount[0]);
+                                        loadData(chatKey[0], getUserFullName, getUsername, lastMessage[0], unseenMessagesCount[0],getUserFoto);
                                     }
                                 });
                             } else {
 
                                 // load chat/messages in the list
-                                loadData(chatKey[0], getUserFullName, getUsername, lastMessage[0], unseenMessagesCount[0]);
+                                loadData(chatKey[0], getUserFullName, getUsername, lastMessage[0], unseenMessagesCount[0],getUserFoto);
                             }
                         }
                     }
@@ -162,11 +178,11 @@ public class Mainchat extends AppCompatActivity {
 
     }
 
-    private void loadData(String chatKey, String fullName, String username, String lastMessage, int unseenMessagesCount) {
+    private void loadData(String chatKey, String fullName, String username, String lastMessage, int unseenMessagesCount, String profile) {
 
         // check if message already exists in the list. This is to prevent duplicate messages / chats/ users
         if (!usernameAlreadyExists(username)) {
-            final MessagesList messagesList = new MessagesList(chatKey, fullName, username, lastMessage, unseenMessagesCount);
+            final MessagesList messagesList = new MessagesList(chatKey, fullName, username, lastMessage, unseenMessagesCount,profile);
             userMessagesList.add(messagesList);
             messagesAdapter.updateMessages(userMessagesList);
         }

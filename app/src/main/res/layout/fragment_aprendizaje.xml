@@ -132,12 +132,12 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/vermasbtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_edittext"
-                    android:text="Ver más"
                     android:layout_gravity="center"
-                    />
+                    android:background="@drawable/custom_edittext"
+                    android:text="Ver más" />
             </LinearLayout>
 
 

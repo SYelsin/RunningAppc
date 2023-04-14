@@ -13,14 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        app:cardCornerRadius="30dp"
         app:cardElevation="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/custom_edittext"
+            android:background="@drawable/registro"
             android:orientation="vertical"
             android:padding="24dp">
 
@@ -39,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/custom_edittext"
+                android:background="@drawable/registro"
                 android:drawableLeft="@drawable/userl"
                 android:drawablePadding="8dp"
                 android:drawableTint="?attr/colorPrimary"
@@ -53,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/custom_edittext"
+                android:background="@drawable/registro"
                 android:drawableLeft="@drawable/padlock"
                 android:drawablePadding="8dp"
                 android:drawableTint="?attr/colorPrimary"
@@ -62,7 +61,6 @@
                 android:padding="8dp"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="14dp" />
-
 
 
             <Button

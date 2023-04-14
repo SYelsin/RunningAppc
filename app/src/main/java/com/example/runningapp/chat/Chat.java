@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.runningapp.MemoryData;
 import com.example.runningapp.R;
 import com.example.runningapp.datos;
@@ -52,6 +53,7 @@ public class Chat extends AppCompatActivity {
         final TextView nameTV = findViewById(R.id.name);
         final EditText messageEditText = findViewById(R.id.messageEditTxt);
         final ImageView sendBtn = findViewById(R.id.sendBtn);
+        final ImageView perfil = findViewById(R.id.profilePic);
 
         chattingRecyclerView = findViewById(R.id.chattingRecyclerView);
 
@@ -65,6 +67,7 @@ public class Chat extends AppCompatActivity {
         final String getName = getIntent().getStringExtra("full_name");
         chatKey = getIntent().getStringExtra("chat_key");
         final String getUsername = getIntent().getStringExtra("username");
+        final String getFoto = getIntent().getStringExtra("profile");
 
 
         username= myApp.getUsername();
@@ -76,6 +79,7 @@ public class Chat extends AppCompatActivity {
 
         // setting other user's full name to TextView
         nameTV.setText(getName);
+        Glide.with(this).load(getFoto).into(perfil);
 
         // setting adapter to recyclerView
         chatAdapter = new ChatAdapter(chatLists, Chat.this);

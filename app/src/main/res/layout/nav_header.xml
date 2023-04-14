@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/navfondo">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilepic"
-        android:layout_width="match_parent"
+        android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerCrop"
         android:src="@drawable/logol" />
+
 
     <TextView
         android:id="@+id/usuario"
@@ -45,7 +47,8 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
         android:tint="#FFFFFF"
-        app:srcCompat="@drawable/luna" />
+        app:srcCompat="@drawable/luna"
+        tools:ignore="UseAppTint" />
 
 
 </RelativeLayout>

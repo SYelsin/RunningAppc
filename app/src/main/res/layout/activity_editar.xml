@@ -6,4 +6,147 @@
     android:layout_height="match_parent"
     tools:context=".EditarActivity">
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fondol"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/post"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Editar Perfil"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/updatefoto"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:src="@drawable/perfil"
+                app:civ_border_color="@color/black"
+                app:civ_border_width="2dp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="130dp"
+                tools:layout_editor_absoluteY="31dp"></de.hdodenhof.circleimageview.CircleImageView>
+
+            <ImageView
+                android:id="@+id/update_foto"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/baseline_flip_camera_ios_24" />
+
+            <EditText
+                android:id="@+id/update_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/registro"
+                android:drawableLeft="@drawable/nombre"
+                android:drawablePadding="8dp"
+                android:drawableTint="?attr/colorPrimary"
+                android:hint="Nombre"
+                android:padding="8dp"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/update_email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/registro"
+                android:drawableLeft="@drawable/correos"
+                android:drawablePadding="8dp"
+                android:drawableTint="?attr/colorPrimary"
+                android:enabled="false"
+                android:hint="Email"
+                android:inputType="none"
+                android:padding="8dp"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/update_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/registro"
+                android:drawableLeft="@drawable/padlock"
+                android:drawablePadding="8dp"
+                android:drawableTint="?attr/colorPrimary"
+                android:hint="Password"
+                android:inputType="textVisiblePassword"
+                android:padding="8dp"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/update_peso"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="7dp"
+                    android:background="@drawable/registro"
+                    android:drawableLeft="@drawable/bascula"
+                    android:drawablePadding="8dp"
+                    android:drawableTint="?attr/colorPrimary"
+                    android:hint="Peso en kg"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/update_altura"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/registro"
+                    android:drawableLeft="@drawable/altura"
+                    android:drawablePadding="8dp"
+                    android:drawableTint="?attr/colorPrimary"
+                    android:hint="Altura en cm"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/update_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/custom_edittext"
+                android:text="GUARDAR CAMBIOS"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

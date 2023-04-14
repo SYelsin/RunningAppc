@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.runningapp.clases.Ejercicio;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -32,6 +33,17 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CarreraActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -102,6 +114,107 @@ public class CarreraActivity extends AppCompatActivity implements OnMapReadyCall
                     empezarBtn.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.iniciar)));
                     mediaPlayerStop.start();
 
+                    datos myApp = (datos) getApplicationContext();
+                    String tiempo = tiempoActual; // tiempo en formato "horas:minutos:segundos"
+                    String[] tiempoSeparado = tiempo.split(":"); // dividir el tiempo en partes separadas
+
+                    int horas1 = Integer.parseInt(tiempoSeparado[0]); // obtener las horas
+                    int minutos1 = Integer.parseInt(tiempoSeparado[1]); // obtener los minutos
+                    int segundos1 = Integer.parseInt(tiempoSeparado[2]); // obtener los segundos
+
+                    int totalSegundos = (horas1 * 3600) + (minutos1 * 60) + segundos1;
+                    double totalhoras = 1600 / 3600.0;
+
+                    //calcular pasos
+                    double pasos = distanciaRecorrida/0.75;
+                    double ritmo = totalhoras/distanciaRecorrida;
+                    // Obtener la referencia del nodo que contiene los datos a actualizar
+
+                    // Obtener la referencia del nodo que contiene los datos a actualizar
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(myApp.getUsername());
+
+// Agregar un listener para obtener los datos actuales de la base de datos
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // Obtener los valores anteriores de los campos que se van a actualizar
+                            String distanciaAnterior = dataSnapshot.child("distancia").getValue(String.class);
+                            String tiempoAnterior = dataSnapshot.child("tiempo").getValue(String.class);
+                            String caloriasAnterior = dataSnapshot.child("calorias").getValue(String.class);
+                            int pasosAnterior = dataSnapshot.child("pasos").getValue(Integer.class);
+                            String ritmoAnterior = dataSnapshot.child("ritmo").getValue(String.class);
+
+                            // Sumar los nuevos valores a los valores anteriores
+                            double distanciaNueva = Double.parseDouble(distanciaAnterior)+ distanciaRecorrida;
+                            double tiempoNuevo = Double.parseDouble(tiempoAnterior)+ totalhoras;
+                            double caloriasNuevas = Double.parseDouble(caloriasAnterior)+ Double.parseDouble(caloriasQuemadas);
+                            int pasosNuevos = pasosAnterior + Double.valueOf(pasos).intValue();
+                            double ritmoNuevo = (Double.parseDouble(ritmoAnterior) + ritmo) / 2.0;
+
+                            // Crear un mapa con los nuevos valores actualizados
+                            Map<String, Object> updates = new HashMap<>();
+                            updates.put("distancia", String.format("%.2f", distanciaNueva));
+                            updates.put("tiempo", String.format("%.2f", tiempoNuevo));
+                            updates.put("calorias", String.format("%.2f", caloriasNuevas));
+                            updates.put("pasos", pasosNuevos);
+                            updates.put("ritmo", String.format("%.2f", ritmoNuevo));
+
+                            // Actualizar los campos en Firebase utilizando el método updateChildren()
+                            ref.updateChildren(updates);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            // Manejar errores de la base de datos
+                        }
+                    });
+
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    String userId = myApp.getUsername();
+                    Date date = new Date();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String dateString = dateFormat.format(date);
+                    Double distancia = distanciaRecorrida;
+                    Double calorias = Double.valueOf(caloriasQuemadas);
+
+
+                    Ejercicio ejercicio = new Ejercicio(userId, dateString, distancia, calorias, totalhoras);
+
+                    DatabaseReference refe = database.getReference("ejercicios").child(dateString + myApp.getUsername());
+
+                    refe.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                // Si ya existe un registro con la misma fecha y el mismo usuario, actualizarlo
+                                double oldDistancia = (double) dataSnapshot.child("distancia").getValue();
+                                double oldCalorias = (double) dataSnapshot.child("calorias").getValue();
+                                double oldTiempoi = (double) dataSnapshot.child("tiempo").getValue();
+                                DecimalFormat decimalFormat = new DecimalFormat("#.00");
+                                double newDistancia = oldDistancia + distancia;
+                                double newCalorias = oldCalorias + Double.valueOf(calorias) ;
+                                double newTiempoi = oldTiempoi + totalhoras;
+
+                                refe.child("distancia").setValue(newDistancia);
+                                refe.child("calorias").setValue(newCalorias);
+                                refe.child("tiempo").setValue(newTiempoi);
+                            } else {
+                                // Si no existe un registro con la misma fecha y el mismo usuario, crear uno nuevo
+                                refe.setValue(ejercicio);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            // Manejar el error
+                        }
+                    });
+
+
+
+
+
                     // Crear un nuevo Intent
                     Intent intent = new Intent(CarreraActivity.this, ResumenActivity.class);
                     // Agregar los datos a enviar
@@ -143,7 +256,7 @@ public class CarreraActivity extends AppCompatActivity implements OnMapReadyCall
         distancia.setText(String.format("%.1f", distanciaRecorrida));
 
         // Calcular las calorías quemadas
-
+        datos myApp = (datos) getApplicationContext();
         //pasar tiempo
         String tiempo = tiempoActual; // tiempo en formato "horas:minutos:segundos"
         String[] tiempoSeparado = tiempo.split(":"); // dividir el tiempo en partes separadas
@@ -154,9 +267,9 @@ public class CarreraActivity extends AppCompatActivity implements OnMapReadyCall
 
         int totalSegundos = (horas1 * 3600) + (minutos1 * 60) + segundos1; //corregir aquí
 
-        float peso = 70; // Peso corporal en kilogramos
+        float peso = Float.parseFloat(myApp.getMpeso()); // Peso corporal en kilogramos
         double distancia = distanciaRecorrida; // Distancia recorrida en kilómetros
-        double tiempoc = 1; // Tiempo de carrera en segundos (30 minutos)
+        double tiempoc = totalSegundos; // Tiempo de carrera en segundos (30 minutos)
         double velocidad = distancia / (tiempoc / 3600.0); // Velocidad en km/h
         double MET = 9.8 * velocidad / 3.5 + 3.5; // Intensidad del ejercicio en METs
         double duracion_horas = tiempoc / 3600.0;
@@ -166,7 +279,6 @@ public class CarreraActivity extends AppCompatActivity implements OnMapReadyCall
         txtcalorias.setText(caloriasQuemadas);
 
     }
-
 
 
 
