@@ -8,8 +8,8 @@
 
     <item
         android:id="@+id/social"
-        android:title="Social"
-        android:icon="@drawable/comunidad"/>
+        android:title="Post"
+        android:icon="@drawable/imagen"/>
 
     <item
         android:id="@+id/fab"
@@ -18,8 +18,8 @@
 
     <item
         android:id="@+id/chat"
-        android:title="Chat"
-        android:icon="@drawable/ic_baseline_message_24"/>
+        android:title="Amigos"
+        android:icon="@drawable/feliz"/>
 
     <item
         android:id="@+id/perfil"

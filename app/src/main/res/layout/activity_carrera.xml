@@ -104,8 +104,8 @@
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
-
         <!-- Mapa de ruta -->
+
         <fragment
             android:id="@+id/map_fragment"
             android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -114,18 +114,47 @@
             android:layout_weight="1" />
 
 
-        <Button
-            android:id="@+id/empezar_button"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="30dp"
-            android:backgroundTint="#209524"
-            android:elevation="8dp"
-            android:text="INICIAR"
-            android:textSize="34sp"
-            android:textStyle="bold"
-            app:cornerRadius="20dp" />
+            android:layout_margin="10dp"
+            android:gravity="center|center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/musicabtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:clickable="true"
+                app:srcCompat="@drawable/baseline_music_note_24" />
+
+            <Button
+                android:id="@+id/empezar_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:backgroundTint="#209524"
+                android:elevation="8dp"
+                android:text="INICIAR"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:cornerRadius="20dp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/calentamientobtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:clickable="true"
+                app:srcCompat="@drawable/baseline_directions_run_24" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 

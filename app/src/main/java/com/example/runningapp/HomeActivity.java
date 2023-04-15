@@ -253,7 +253,7 @@ public class HomeActivity extends AppCompatActivity {
                     fragment = new SocialFragment();
                     break;
                 case R.id.chat:
-                    Intent intentc = new Intent(HomeActivity.this, Mainchat.class);
+                    Intent intentc = new Intent(HomeActivity.this, AmigosActivity.class);
                     startActivity(intentc);
                     break;
                 case R.id.perfil:

@@ -50,10 +50,10 @@ public class Chat extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
 
-        final TextView nameTV = findViewById(R.id.name);
+        final TextView nameTV = findViewById(R.id.nombrepersona);
         final EditText messageEditText = findViewById(R.id.messageEditTxt);
         final ImageView sendBtn = findViewById(R.id.sendBtn);
-        final ImageView perfil = findViewById(R.id.profilePic);
+        final ImageView perfil = findViewById(R.id.fotopersona);
 
         chattingRecyclerView = findViewById(R.id.chattingRecyclerView);
 

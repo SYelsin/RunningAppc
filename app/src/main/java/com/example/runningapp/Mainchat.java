@@ -1,9 +1,11 @@
 package com.example.runningapp;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,14 +37,15 @@ public class Mainchat extends AppCompatActivity {
 
     // user messages adapter
     private MessagesAdapter messagesAdapter;
+    private ImageView regresarbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_main);
+        final RecyclerView messagesRecyclerView = findViewById(R.id.personasRecyclerView);
+        final CircleImageView PerfilPic = findViewById(R.id.userProfilePicp);
 
-        final RecyclerView messagesRecyclerView = findViewById(R.id.messagesRecyclerView);
-        final CircleImageView PerfilPic = findViewById(R.id.userProfilePic);
 
 
         final String username = MemoryData.getUsuario(this);
@@ -63,7 +66,21 @@ public class Mainchat extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Mainchat.this, PerfilActivity.class);
+                View sharedView = findViewById(R.id.userProfilePicp); // Aquí se debe obtener la vista de transición compartida
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Mainchat.this, sharedView, "foto");
+                startActivity(intent, options.toBundle());
+
+            }
+        });
+        regresarbtn = findViewById(R.id.regresarbtn2);
+        regresarbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Mainchat.this, AmigosActivity.class);
                 startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.slide_up_out, R.anim.no_anim);
+
             }
         });
 
@@ -196,4 +213,10 @@ public class Mainchat extends AppCompatActivity {
         }
         return false;
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_up_out, R.anim.no_anim);
+    }
+
 }

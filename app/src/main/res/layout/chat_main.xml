@@ -13,6 +13,20 @@
         android:layout_height="wrap_content">
 
 
+        <ImageView
+            android:id="@+id/regresarbtn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:foregroundGravity="center"
+            app:srcCompat="@drawable/regresar" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,18 +37,19 @@
             android:textStyle="bold" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userProfilePic"
+            android:id="@+id/userProfilePicp"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="40dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:transitionName="foto"
             android:src="@drawable/perfil"/>
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/messagesRecyclerView"/>
+        android:id="@+id/personasRecyclerView"/>
 </LinearLayout>

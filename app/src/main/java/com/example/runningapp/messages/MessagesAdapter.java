@@ -102,11 +102,11 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.name);
+            name = itemView.findViewById(R.id.nombrepersona);
             lastMessage = itemView.findViewById(R.id.lastMessage);
             unseenMessages = itemView.findViewById(R.id.unseenMessages);
             rootLayout = itemView.findViewById(R.id.rootLayout);
-            perfilfoto = itemView.findViewById(R.id.profilePic);
+            perfilfoto = itemView.findViewById(R.id.fotopersona);
         }
     }
 }

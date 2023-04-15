@@ -9,9 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -45,11 +47,11 @@ public class PerfilActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
-        username = findViewById(R.id.perfilusuario);
-        TextView Distancia = findViewById(R.id.perfildistancia);
+        username = findViewById(R.id.nombreusuario);
+        TextView Distancia = findViewById(R.id.txtseguidores);
         TextView Tiempo = findViewById(R.id.perfiltiempo);
-        TextView Calorias = findViewById(R.id.perfilcalorias);
-        CircleImageView Foto = findViewById(R.id.updatefoto);
+        TextView Calorias = findViewById(R.id.txtseguidos);
+        CircleImageView Foto = findViewById(R.id.fotousuario);
         ImageView btnsetting = findViewById(R.id.btnsetting);
 
         datos myApp = (datos) getApplicationContext();
@@ -72,6 +74,46 @@ public class PerfilActivity extends AppCompatActivity {
                     Tiempo.setText(mTiempo + " hrs ");
                     Calorias.setText(Double.toString(mCalorias));
                     Glide.with(getApplicationContext()).load(mFoto).into(Foto);
+                    Foto.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(PerfilActivity.this);
+
+                            // inflar el diseño personalizado para el diálogo
+                            View view = getLayoutInflater().inflate(R.layout.dialog_custom_image, null);
+                            ImageView imageView = view.findViewById(R.id.dialog_image_view);
+                            ImageView closeButton = view.findViewById(R.id.dialog_close_button);
+
+                            // cargar la imagen con Glide en la vista de ImageView
+                            Glide.with(getApplicationContext())
+                                    .load(mFoto)
+                                    .into(imageView);
+
+                            // establecer el ancho y la altura de la vista de ImageView
+                            imageView.setLayoutParams(new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT));
+
+
+
+                            // establecer la vista personalizada en el diálogo
+                            builder.setView(view);
+
+                            // crear el diálogo y asignarlo a la variable 'dialog'
+                            final AlertDialog dialog = builder.create();
+
+                            // mostrar el diálogo
+                            dialog.show();
+
+                            // agregar un OnClickListener al botón de cerrar
+                            closeButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+                        }
+                    });
 
                 }
             }

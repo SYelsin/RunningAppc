@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.location.Location;
@@ -11,11 +13,16 @@ import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -33,6 +40,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,8 +49,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CarreraActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -85,7 +95,8 @@ public class CarreraActivity extends AppCompatActivity implements OnMapReadyCall
 
     private TextView Tiempo, distancia, txtcalorias;
     private Button empezarBtn;
-    private float distance = 0;
+    private FloatingActionButton musicabtn, calentamientobtn;
+    private double distance = 0.1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +107,8 @@ public class CarreraActivity extends AppCompatActivity implements OnMapReadyCall
         distancia = findViewById(R.id.txtDistancia);
         txtcalorias = findViewById(R.id.txtCalorias);
         empezarBtn = findViewById(R.id.empezar_button);
+        musicabtn = findViewById(R.id.musicabtn);
+        calentamientobtn = findViewById(R.id.calentamientobtn);
         mediaPlayerStart = MediaPlayer.create(this, R.raw.iniciado);
         mediaPlayerStop = MediaPlayer.create(this, R.raw.finalizado);
 
@@ -107,12 +120,15 @@ public class CarreraActivity extends AppCompatActivity implements OnMapReadyCall
                     empezarBtn.setText(textoDetener);
                     empezarBtn.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.detener)));
                     mediaPlayerStart.start();
+                    calentamientobtn.setVisibility(View.GONE);
+                    musicabtn.setVisibility(View.GONE);
                 } else {
                     handler.removeCallbacks(runnable);
                     actualizarUI();
                     empezarBtn.setText(textoiniciar);
                     empezarBtn.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.iniciar)));
                     mediaPlayerStop.start();
+
 
                     datos myApp = (datos) getApplicationContext();
                     String tiempo = tiempoActual; // tiempo en formato "horas:minutos:segundos"
@@ -227,6 +243,23 @@ public class CarreraActivity extends AppCompatActivity implements OnMapReadyCall
                 }
             }
         });
+
+        musicabtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMusicApp();
+
+            }
+        });
+        calentamientobtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CarreraActivity.this,CalentamientoActivity1.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
@@ -275,8 +308,9 @@ public class CarreraActivity extends AppCompatActivity implements OnMapReadyCall
         double duracion_horas = tiempoc / 3600.0;
         calorias = ((0.75 * peso) + (MET * peso * duracion_horas)) / 2.0;
         double kcalorias = calorias / 1000.0; // Convertir a kilocalorías (kcal)
-        caloriasQuemadas = String.format("%.1f", kcalorias);
-        txtcalorias.setText(caloriasQuemadas);
+        caloriasQuemadas = String.format("%.2f", kcalorias);
+       String caloriasQuemadas1 = String.format("%.1f", kcalorias);
+        txtcalorias.setText(caloriasQuemadas1);
 
     }
 
@@ -390,7 +424,7 @@ public class CarreraActivity extends AppCompatActivity implements OnMapReadyCall
                 if (ultimaUbicacion != null) {
                     // Añadir la distancia recorrida en metros desde la última ubicación a la distancia total
                     distance += ultimaUbicacion.distanceTo(location);
-                    distanciaRecorrida = distance/1000;
+                    distanciaRecorrida = distance/1000.0;
 
                 }
                 ultimaUbicacion = location;
@@ -398,7 +432,84 @@ public class CarreraActivity extends AppCompatActivity implements OnMapReadyCall
         }
     };
 
+
+    //Musica
+
+    private void openMusicApp() {
+        // Obtener el administrador de paquetes
+        PackageManager pm = getPackageManager();
+
+        // Crear una lista de aplicaciones de música instaladas
+        List<ApplicationInfo> musicApps = new ArrayList<>();
+        List<PackageInfo> packages = pm.getInstalledPackages(0);
+        for (PackageInfo info : packages) {
+            if (pm.getLaunchIntentForPackage(info.packageName) != null) {
+                try {
+                    ApplicationInfo appInfo = pm.getApplicationInfo(info.packageName, 0);
+                    if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+                        // La aplicación no es del sistema
+                        // Verificar si es una aplicación de música
+                        if (appInfo.packageName.equals("com.spotify.music") ||
+                                appInfo.packageName.equals("com.google.android.apps.youtube.music") ||
+                                appInfo.packageName.equals("com.google.android.music")) {
+                            musicApps.add(appInfo);
+                        }
+                    }
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // Crear un diálogo de selección de aplicación para permitir al usuario elegir entre las aplicaciones de música detectadas
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Seleccionar aplicación de música");
+        builder.setAdapter(new MusicAppListAdapter(this, musicApps), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Obtener el nombre del paquete de la aplicación seleccionada
+                String packageName = musicApps.get(which).packageName;
+
+                // Crear un intent explícito para abrir la aplicación seleccionada
+                Intent intent = pm.getLaunchIntentForPackage(packageName);
+                startActivity(intent);
+            }
+        });
+        builder.show();
     }
+
+
+
+    private static class MusicAppListAdapter extends ArrayAdapter<ApplicationInfo> {
+
+        private PackageManager mPackageManager;
+
+        public MusicAppListAdapter(Context context, List<ApplicationInfo> apps) {
+            super(context, 0, apps);
+            mPackageManager = context.getPackageManager();
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_music_app, parent, false);
+            }
+
+            // Obtener la información de la aplicación
+            ApplicationInfo appInfo = getItem(position);
+
+            // Establecer el icono y el nombre de la aplicación
+            ImageView iconView = convertView.findViewById(R.id.app_icon);
+            iconView.setImageDrawable(appInfo.loadIcon(mPackageManager));
+            TextView nameView = convertView.findViewById(R.id.app_name);
+            nameView.setText(appInfo.loadLabel(mPackageManager));
+
+            return convertView;
+        }
+    }
+}
+
 
 
 

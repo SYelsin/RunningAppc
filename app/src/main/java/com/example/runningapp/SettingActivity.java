@@ -43,16 +43,16 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        username = findViewById(R.id.perfilusuario);
+        username = findViewById(R.id.nombreusuario);
         Name = findViewById(R.id.perfilnombre);
         Mail = findViewById(R.id.perfilcorreo);
-        Distancia = findViewById(R.id.perfildistancia);
+        Distancia = findViewById(R.id.txtseguidores);
         Tiempo = findViewById(R.id.perfiltiempo);
-        Calorias = findViewById(R.id.perfilcalorias);
+        Calorias = findViewById(R.id.txtseguidos);
         Peso = findViewById(R.id.perfilpeso);
         Altura = findViewById(R.id.perfilestatura);
         Pais = findViewById(R.id.perfilpais);
-        Foto = findViewById(R.id.updatefoto);
+        Foto = findViewById(R.id.fotousuario);
 
         datos myApp = (datos) getApplicationContext();
         mUsername = myApp.getUsername();

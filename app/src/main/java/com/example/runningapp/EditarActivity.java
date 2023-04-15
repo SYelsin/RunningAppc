@@ -61,7 +61,7 @@ public class EditarActivity extends AppCompatActivity {
         alturatxt = findViewById(R.id.update_altura);
         emailtxt = findViewById(R.id.update_email);
         actualizarfoto = findViewById(R.id.update_foto);
-        perfil = findViewById(R.id.updatefoto);
+        perfil = findViewById(R.id.fotousuario);
 
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(

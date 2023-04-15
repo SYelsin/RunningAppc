@@ -33,7 +33,7 @@
                 android:textStyle="bold" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/updatefoto"
+                android:id="@+id/fotousuario"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"

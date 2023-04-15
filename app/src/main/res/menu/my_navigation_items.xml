@@ -30,7 +30,7 @@
             <item
                 android:id="@+id/comunidad"
                 android:icon="@drawable/comunidad"
-                android:title="Comunidad" />
+                android:title="Post" />
 
         </menu>
     </item>

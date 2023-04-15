@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="#F6F5F5"
         android:orientation="vertical"
-        tools:context=".PerfilActivity">
+        tools:context=".UserDetailActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -20,6 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:background="?attr/colorPrimary"
+                android:paddingTop="50dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -28,26 +29,16 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/btnsetting"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="end"
-                            android:layout_margin="5dp"
-                            android:layout_weight="1"
-                            app:srcCompat="@drawable/baseline_settings_24"
-                            app:tint="#FFFFFF" />
-
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/fotousuario"
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
-                            android:layout_gravity="center"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="start|center_horizontal|left"
                             android:layout_margin="10dp"
                             android:src="@drawable/perfil"
                             android:transitionName="foto"
@@ -65,10 +56,97 @@
                             android:text="Shakira"
                             android:textColor="#fff"
                             android:textSize="23dp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:transitionName="nombres" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/seguidoresusuario"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="10"
+                                    android:textAlignment="center"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView20"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:drawableStart="@drawable/userl"
+                                    android:drawableTint="#ffff"
+                                    android:padding="5dp"
+                                    android:text="Seguidores"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/seguidosusuario"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="10"
+                                    android:textAlignment="center"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView24"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:drawableStart="@drawable/userl"
+                                    android:drawableTint="#ffff"
+                                    android:padding="5dp"
+                                    android:text="Seguidos"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnseguir"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:backgroundTint="@color/iniciar"
+                            android:text="Seguir" />
+
                     </LinearLayout>
 
                 </LinearLayout>
+
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
@@ -84,6 +162,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:orientation="horizontal"
                     android:padding="10dp"
                     android:weightSum="3">
@@ -103,12 +182,12 @@
                             android:textSize="17dp" />
 
                         <TextView
-                            android:id="@+id/txtseguidores"
+                            android:id="@+id/distanciausuario"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="100 Km"
                             android:textColor="?attr/colorPrimary"
-                            android:textSize="20dp"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -128,12 +207,12 @@
                             android:textSize="17dp" />
 
                         <TextView
-                            android:id="@+id/perfiltiempo"
+                            android:id="@+id/tiempousario"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="10:50:54"
+                            android:text="100 Km"
                             android:textColor="?attr/colorPrimary"
-                            android:textSize="20dp"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -148,17 +227,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Kilocalorías"
+                            android:text="Calorías"
                             android:textColor="#000"
                             android:textSize="17dp" />
 
                         <TextView
-                            android:id="@+id/txtseguidos"
+                            android:id="@+id/caloriasusuario"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="87.5"
                             android:textColor="?attr/colorPrimary"
-                            android:textSize="20dp"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>

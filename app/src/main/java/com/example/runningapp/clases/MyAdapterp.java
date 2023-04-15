@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
 import com.example.runningapp.R;
@@ -48,11 +51,42 @@ public class MyAdapterp extends BaseAdapter {
         }
 
         ImageView gridImage = view.findViewById(R.id.gridImage);
-        //TextView gridCaption = view.findViewById(R.id.gridCaption);
 
-
+        // cargar la imagen con Glide en la vista de ImageView
         Glide.with(context).load(dataList.get(i).getImageURL()).into(gridImage);
-        //gridCaption.setText(dataList.get(i).getCaption());
+
+        // agregar listener de clic en la vista de ImageView
+        gridImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // inflar el diseño personalizado para el diálogo
+                View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_custom_image, null);
+                ImageView dialogImage = dialogView.findViewById(R.id.dialog_image_view);
+                ImageView closeButton = dialogView.findViewById(R.id.dialog_close_button);
+
+                // cargar la imagen con Glide en la vista de ImageView del diálogo
+                Glide.with(context).load(dataList.get(i).getImageURL()).into(dialogImage);
+
+                // establecer el ancho y la altura de la vista de ImageView
+                dialogImage.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
+
+
+                // construir y mostrar el diálogo personalizado
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setView(dialogView);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                // agregar un OnClickListener al botón de cerrar
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
 
         return view;
     }

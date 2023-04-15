@@ -34,7 +34,7 @@
                         android:orientation="vertical">
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/updatefoto"
+                            android:id="@+id/fotousuario"
                             android:layout_width="130dp"
                             android:layout_height="130dp"
                             android:layout_gravity="center"
@@ -44,7 +44,7 @@
                             app:civ_border_width="2dp"></de.hdodenhof.circleimageview.CircleImageView>
 
                         <TextView
-                            android:id="@+id/perfilusuario"
+                            android:id="@+id/nombreusuario"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -90,7 +90,7 @@
                             android:textSize="17dp" />
 
                         <TextView
-                            android:id="@+id/perfildistancia"
+                            android:id="@+id/txtseguidores"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="100 Km"
@@ -140,7 +140,7 @@
                             android:textSize="17dp" />
 
                         <TextView
-                            android:id="@+id/perfilcalorias"
+                            android:id="@+id/txtseguidos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="87.5"
